@@ -6,122 +6,303 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- UIN Input Field - Simplified Version -->
-    <LinearLayout
+    <!-- UIN Input Section with QR Scanner -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="16dp"
-        android:gravity="center_vertical">
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UIN: "
-            android:textSize="16sp"
-            android:layout_marginEnd="8dp" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/uin_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="number"
-            android:maxLength="12"
-            android:text="3610817026"
-            android:hint="Enter UIN"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp" />
+            <!-- UIN Input Field -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical">
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/qr_scanner_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Scan Order QR Code"
+                    android:textSize="18sp"
+                    android:minWidth="48dp"
+                    android:contentDescription="Scan QR Code"
+                    android:backgroundTint="@android:color/holo_green_dark"
+                    style="@style/Widget.Material3.Button"
+                    />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/discover"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="Discover"
-            style="@style/Widget.Material3.Button" />
+            </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Info"
-            android:enabled="false"
-            style="@style/Widget.Material3.Button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UIN: "
+                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+                <EditText
+                    android:id="@+id/uin_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:text="3610817026"
+                    android:hint="Enter UIN or scan QR code"
+                    android:background="@android:drawable/edit_text"
+                    android:padding="8dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/capture"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="Capture"
-            android:enabled="false"
-            style="@style/Widget.Material3.Button" />
+            </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/share"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Share"
-            style="@style/Widget.Material3.Button.OutlinedButton" />
+            <!-- QR Scanner Section (Initially Hidden) -->
+            <LinearLayout
+                android:id="@+id/qr_scanner_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Position the QR code within the frame"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@android:color/darker_gray" />
+
+                <!-- QR Scanner Camera Preview -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@android:color/black">
+
+                    <!-- This will be replaced with actual camera preview in code -->
+                    <com.journeyapps.barcodescanner.BarcodeView
+                        android:id="@+id/barcode_scanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <!-- Scanning overlay -->
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/qr_scanner_overlay" />
+
+                </FrameLayout>
+
+                <!-- Scanner Controls -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/toggle_flash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="💡 Flash"
+                        style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/close_scanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="❌ Close"
+                        style="@style/Widget.Material3.Button.TextButton" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Action Buttons -->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginBottom="16dp">-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/discover"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:text="Discover"-->
+<!--            style="@style/Widget.Material3.Button" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/info"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:text="Info"-->
+<!--            android:enabled="false"-->
+<!--            style="@style/Widget.Material3.Button" />-->
+
+<!--    </LinearLayout>-->
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/capture_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Capture All (Discover + Capture)"
+        android:text="Authenticate"
         android:backgroundTint="@android:color/holo_green_dark"
         style="@style/Widget.Material3.Button" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+    <!-- Results Section -->
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1">-->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/textbox_background"
-            android:padding="12dp"
-            android:text="Response will appear here..."
-            android:textSize="12sp"
-            android:fontFamily="monospace"
-            android:scrollbars="vertical" />
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:id="@+id/textbox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/textbox_background"-->
+<!--            android:padding="12dp"-->
+<!--            android:text="Response will appear here..."-->
+<!--            android:textSize="12sp"-->
+<!--            android:fontFamily="monospace"-->
+<!--            android:scrollbars="vertical" />-->
 
-    </ScrollView>
+<!--    </ScrollView>-->
 
-    <com.google.android.material.button.MaterialButton
+
+    <!-- Loading and Result Display -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/result_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Visit NPrime Website"
-        android:onClick="nprimeWebsite"
-        style="@style/Widget.Material3.Button.TextButton" />
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <!-- Loading State -->
+            <LinearLayout
+                android:id="@+id/loading_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sending biometrics request..."
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Success State -->
+            <LinearLayout
+                android:id="@+id/success_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"
+                    android:src="@android:drawable/ic_dialog_info"
+                    app:tint="@android:color/holo_green_dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Authentication Successful!"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_green_dark" />
+
+            </LinearLayout>
+
+            <!-- Error State -->
+            <LinearLayout
+                android:id="@+id/error_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="12dp"
+                    android:src="@android:drawable/ic_dialog_alert"
+                    app:tint="@android:color/holo_red_dark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Authentication Failed"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/error_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Error details will appear here"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
